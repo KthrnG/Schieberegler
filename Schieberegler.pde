@@ -1,24 +1,22 @@
 import processing.serial.*;
 
+Blitz blitz;
 int schieberegler = 0;
 int MAXIMUM = 100;
 
 void setup() {
-  size(400, 100);
   //println(Serial.list());
   Serial arduino = new Serial(this, Serial.list()[1], 9600);
   arduino.bufferUntil('\n');
+
+  fullScreen();
   frameRate(10);
+
+  blitz = new Blitz();
 }
 
 void draw() {
-  background(0);
-  //textSize(30);
-  //text("Schieberegler: " + schieberegler, 10, 30);
-  float zufallsZahl = random(MAXIMUM * 4);
-  if (zufallsZahl < schieberegler) {
-    new Blitz().draw();
-  }
+  blitz.draw(schieberegler);
 }
 
 void serialEvent(Serial arduino) {
