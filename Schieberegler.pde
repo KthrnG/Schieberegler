@@ -1,8 +1,10 @@
 import processing.serial.*;
 
 Blitz blitz;
+Regen regen;
 int schieberegler = 0;
 int MAXIMUM = 100;
+int MINIMUM = 0;
 
 void setup() {
   //println(Serial.list());
@@ -13,10 +15,12 @@ void setup() {
   frameRate(10);
 
   blitz = new Blitz();
+  regen = new Regen(this);
 }
 
 void draw() {
   blitz.draw(schieberegler);
+  regen.update(schieberegler);
 }
 
 void serialEvent(Serial arduino) {
