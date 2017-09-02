@@ -15,16 +15,18 @@ void setup() {
   frameRate(10);
 
   blitz = new Blitz();
-  regen = new Regen(this);
+  regen = new Regen();
 }
 
 void draw() {
-  blitz.draw(schieberegler);
-  regen.update(schieberegler);
+  blitz.update();
+  regen.update();
 }
 
 void serialEvent(Serial arduino) {
   String rawString = arduino.readString();
-  println(rawString);
-  schieberegler = int(Float.parseFloat(rawString));
+  //println(rawString);
+  if (rawString != null) {
+    schieberegler = int(Float.parseFloat(rawString));
+  }
 }

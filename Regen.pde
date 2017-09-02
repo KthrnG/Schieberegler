@@ -3,12 +3,13 @@ import processing.sound.*;
 class Regen {
   WhiteNoise noise;
   
-  Regen(Schieberegler app) {
-    noise = new WhiteNoise(app);
+  Regen() {
+    noise = new WhiteNoise(Schieberegler.this);
     noise.play();
   }
 
-  void update(int schieberegler) {
-    noise.amp(map(schieberegler, MINIMUM, MAXIMUM, 0, 1));
+  void update() {
+    float volume = map(schieberegler, MINIMUM, MAXIMUM, 0, 1);
+    noise.amp(volume);
   }
 }
