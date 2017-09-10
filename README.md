@@ -1,4 +1,3 @@
-h1. Schieberegler
-
+# Schieberegler
 
 Dies ist ein Schieberegler.
