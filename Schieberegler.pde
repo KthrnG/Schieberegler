@@ -1,26 +1,49 @@
 import processing.serial.*;
+import processing.sound.*;
 
-Blitz blitz;
-Regen regen;
 int schieberegler = 0;
 int MAXIMUM = 100;
 int MINIMUM = 0;
 
+WhiteNoise regen;
+
 void setup() {
   //println(Serial.list());
-  Serial arduino = new Serial(this, Serial.list()[1], 9600);
+  Serial arduino = new Serial(this, Serial.list()[32], 9600);
   arduino.bufferUntil('\n');
 
-  fullScreen();
+  fullScreen(FX2D, 1);
   frameRate(10);
 
-  blitz = new Blitz();
-  regen = new Regen();
+  regen = new WhiteNoise(this);
+  regen.play();
 }
 
 void draw() {
-  blitz.update();
-  regen.update();
+  blitz();
+  regen();
+}
+
+void blitz() {
+  float zufallsZahl = random(MAXIMUM * 80);
+  if (zufallsZahl < schieberegler) {
+    background(255);
+    donner();
+  } else {
+    background(0);
+  }
+}
+
+void donner() {
+  SoundFile file = new SoundFile(this, "Donner.wav");
+  float RATE = 1;
+  float volume = map(schieberegler, MINIMUM, MAXIMUM, 0, 1);
+  file.play(RATE, volume);
+}
+
+void regen() {
+  float volume = map(schieberegler, MINIMUM, MAXIMUM, 0, 1);
+  regen.amp(volume);
 }
 
 void serialEvent(Serial arduino) {
